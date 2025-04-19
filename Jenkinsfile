@@ -31,10 +31,10 @@ sh 'git submodule update --init --recursive'
                     withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                         sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
                         if (env.BRANCH_NAME == 'dev') {
-                            sh "docker tag ${DOCKERHUB_USER}/${IMAGE_NAME}:${DEV_TAG} ${DOCKERHUB_USER}/dev:v1"
+                            sh "docker tag ${DOCKERHUB_USER}/${IMAGE_NAME}-${DEV_TAG} ${DOCKERHUB_USER}/dev:v1"
                             sh "docker push ${DOCKERHUB_USER}/dev:v1"
                         } else if (env.BRANCH_NAME == 'master') {
-                            sh "docker tag ${DOCKERHUB_USER}/${IMAGE_NAME}:${DEV_TAG} ${DOCKERHUB_USER}/prod:v1"
+                            sh "docker tag ${DOCKERHUB_USER}/${IMAGE_NAME}-${DEV_TAG} ${DOCKERHUB_USER}/prod:v1"
                             sh "docker push ${DOCKERHUB_USER}/prod:v1"
                         }
                     }
